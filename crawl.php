@@ -11,9 +11,12 @@
 /**
  * Call necesary include files
  */
-include('config.php');
-include('includes/functions.php');
-include('includes/mysql_functions.php');
+if( !file_exists( 'config.php' ) ) 
+	die("config.php file not found. Please copy the sample and customize.");
+	
+require('config.php');
+require('includes/functions.php');
+require('includes/mysql_functions.php');
 
 /**
  * Parse domain list into an array
@@ -76,6 +79,12 @@ $domain_array = explode(',',$domains);
 			 * Loop through the array of links
 			 */
 			foreach ($links as $key => &$link) {
+				
+				/**
+				 * Get type of link (absolute/relative)
+				 */
+				$type = link_type( $link );
+				
 				/**
 				 * Uniformly clean the link so we don't have duplicates (absolute, no anchors, add www., etc.)
 				 */
@@ -131,7 +140,7 @@ $domain_array = explode(',',$domains);
 				/**
 				 * Add the link to the links table
 				 */
-				add_link($id,$to);
+				add_link($id,$to,$type);
 			}
 			
 			/**

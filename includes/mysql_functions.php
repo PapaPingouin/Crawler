@@ -114,14 +114,15 @@ function mysql_row_array($result) {
  *
  * @param string $table Name of table to operate on
  * @param array $data Associative array of data fields and values
+ * @param bool $ignore Add ignore to the insert statement
  * @returns int|bool ID of inserted row if valid, false if invalid
  * @package mysql_functions
  */
 
-function mysql_insert($table, $data) {
+function mysql_insert($table, $data, $ignore=false) {
 
 	//Build query
-	$sql = "INSERT INTO `$table` (";
+	$sql = "INSERT ".($ignore?'IGNORE':'')." INTO `$table` (";
 	foreach ($data as $field => $value) $sql .= "`$field`, ";
 	$sql = substr($sql,0,strlen($sql)-2) . ") VALUES (";
 	foreach ($data as $field => $value) $sql .= "'" .  mysql_real_escape_string($value) . "', ";

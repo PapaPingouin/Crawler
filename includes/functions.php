@@ -89,7 +89,7 @@ function parse_dir($url) {
  *
  * @params string $link link to clean
  * @parmas string $dir directory of parent (linking) page
- * @return strin cleaned link
+ * @return string cleaned link
  */
 function clean_link($link, $dir) {
 	$link = url_to_absolute($dir, $link); //make them absolute, not relative
@@ -99,6 +99,16 @@ function clean_link($link, $dir) {
 	return $link;
 }
 
+/**
+ * Get type of link (absolute/relative)
+ * 
+ * @params string $link url to check
+ * @return string abs/rel
+ */
+function link_type($link)
+{
+	return ( substr($link,0,4) == 'http') ? 'abs' : 'rel';
+}
 
 /**
  * Performs a regular expression to see if a given link is an image
@@ -186,10 +196,10 @@ function add_url($link,$clicks,$crawl_tag) {
  * @params int $to ID of target page
  * @return int|bool LinkID on sucess, false on fail
  */
-function add_link($from,$to) {
+function add_link($from,$to,$type=false) {
 	if ($from == $to) return false;
-	if (mysql_exists('links',array('from'=>$from,'to'=>$to))) return false;
-	else return mysql_insert('links',array('from'=>$from,'to'=>$to));
+	//if (mysql_exists('links',array('from'=>$from,'to'=>$to))) return false;
+	else return mysql_insert('links',array('from'=>$from,'to'=>$to,'type'=>$type), true);
 }
 
 /**
