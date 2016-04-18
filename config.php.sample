@@ -9,14 +9,14 @@
   * MySQL Connection Settings
   */
  $mysql_server = 'localhost';
- $mysql_user = 'root';
- $mysql_pass = 'galgren'; 
- $mysql_db = 'fcc_crawler';
+ $mysql_user = 'USERNAME';
+ $mysql_pass = 'PASSWORD'; 
+ $mysql_db = 'DATABASE';
 
 /**
  * Local Timezone
  */
- $timezone = 'America/New_York';
+ $timezone = 'Europe/Paris';
 
 /**
  * Script Timeout (seconds)
@@ -30,7 +30,7 @@
  * Example:  "www.fcc.gov, broadband.com"
  *
  */
-$domains = "www.fcc.gov"; 
+$domains = "www.my_domain_to_crawl.com"; 
 
 /**
  * 
