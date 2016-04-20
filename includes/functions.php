@@ -196,10 +196,10 @@ function add_url($link,$clicks,$crawl_tag) {
  * @params int $to ID of target page
  * @return int|bool LinkID on sucess, false on fail
  */
-function add_link($from,$to,$type=false) {
+function add_link($from,$to,$type=false,$distance=false) {
 	if ($from == $to) return false;
 	//if (mysql_exists('links',array('from'=>$from,'to'=>$to))) return false;
-	else return mysql_insert('links',array('from'=>$from,'to'=>$to,'type'=>$type), true);
+	else return mysql_insert('links',array('from'=>$from,'to'=>$to,'type'=>$type,'distance'=>$distance), true);
 }
 
 /**
@@ -256,7 +256,7 @@ function uncrawled_urls($crawl_tag) {
 function have_url($url,$crawl_tag) {
 	$url = mysql_row_array(mysql_select('urls',array('url'=>urldecode($url))));
 	if (sizeof($url)==0) return false;
-	else return $url['ID'];
+	else return $url;
 }
 
 /* Depreciated (I think)

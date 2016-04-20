@@ -80,6 +80,10 @@ function mysql_array($result,$assoc = TRUE) {
 	return stripslashes_deep($results);
 }
 
+
+
+
+
 /**
  * Returns an array of a single MySQL result row.
  *
@@ -288,6 +292,37 @@ function stripslashes_deep($value) {
         array_map('stripslashes_deep', $value) :
         stripslashes($value);
     return $value;
+}
+
+
+function sql_totab($sql, $key=false) {
+	
+	$results = array();
+	$res = mysql_query( $sql );
+	if( $res )
+	{
+		while ($row = mysql_fetch_assoc($res))
+		{
+			if( $key && isset( $row[ $key ] ) )
+				$results[ $row[ $key ] ] = $row;
+			else
+				$results[] = $row;
+		} 
+	}
+	return $results;
+}
+
+function sql_data($sql, $key=false) {
+	
+	$res = mysql_query( $sql );
+	if( $res )
+	{
+		while ($row = mysql_fetch_assoc($res))
+		{
+			return $row;
+		} 
+	}
+	return false;
 }
 
 

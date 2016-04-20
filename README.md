@@ -16,6 +16,7 @@ Added by papapingouin
 * remove config.php and make a config.php.sample
 * change README format
 * type to links (abs/rel), schema modification
+* distance to links, schema modification : used to hide backward links. Value is click difference between from and to
 
 TODO
 --

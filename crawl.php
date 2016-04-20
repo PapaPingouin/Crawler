@@ -52,8 +52,8 @@ $domain_array = explode(',',$domains);
 			 * If this is a seed URL, set clicks to zero, 
 			 * otherwise, increment our internal click counter one beyond the parent's clicks
 			 */
-			if (!isset($url_data['clicks'])) $clicks = 0;
-			else $clicks = $url_data['clicks'] + 1;
+			$from_clicks = (isset($url_data['clicks']) ? intval($url_data['clicks']) : 0);
+			$to_clicks = $from_clicks + 1;
 			
 			/**
 			 * Curl the page, returning data as an array
@@ -113,12 +113,12 @@ $domain_array = explode(',',$domains);
 				/**
 				 * Check to see if the URL is already in the table, if so, grab its ID number
 				 */
-				$to = have_url($link,$crawl_tag);
+				$to_data = have_url($link,$crawl_tag);
 				
 				/**
 				 * If the link is not in the table, add it
 				 */
-				if (!$to) {
+				if (!$to_data) {
 					/**
 					 * Output that we're adding a URL if we're in verbose mode
 					 */
@@ -128,9 +128,17 @@ $domain_array = explode(',',$domains);
 					/**
 					 * Add URL to table, grab link ID #
 					 */
-					$to = add_url($link,$clicks,$crawl_tag);
+					$to = add_url($link,$to_clicks,$crawl_tag);
+					$clicks = $to_clicks;
 				}
-				
+				else
+				{
+					/**
+					 * url already exists. Get the ID and clicks
+					 */
+					$to = $to_data['ID'];
+					$clicks = $to_data['clicks'];
+				}
 				/**
 				 * If debug mode, indicate that we're adding a link
 				 */
@@ -140,7 +148,7 @@ $domain_array = explode(',',$domains);
 				/**
 				 * Add the link to the links table
 				 */
-				add_link($id,$to,$type);
+				add_link($id,$to,$type,($clicks-$from_clicks) );
 			}
 			
 			/**
