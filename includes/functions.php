@@ -244,7 +244,7 @@ function get_page($pageID) {
  * @return array Associative array of uncrawled URLs & page data
  */
 function uncrawled_urls($crawl_tag) {
-	return mysql_array(mysql_query("SELECT * FROM `urls` WHERE `crawled` = '0' AND `crawl_tag`=\"$crawl_tag\" LIMIT 100"));
+	return mysql_array(mysql_query("SELECT * FROM `urls` WHERE `crawled` = '0' AND `crawl_tag`=\"$crawl_tag\" ORDER BY `clicks` ASC LIMIT 10"));
 }
 
 /**
