@@ -133,16 +133,18 @@ function out_of_domain($link) {
 	global $domain_array;
 
     // get host name from URL
-    preg_match("/^(http:\/\/)?([^\/]+)/i", $link, $matches);
-    $host = $matches[2];
-    // echo "<br />host: $host"; 
-    // get last two segments of host name
-    // preg_match("/[^\.\/]+\.[^\.\/]+$/", $host, $matches);
-    foreach ($domain_array as $domain) {
-        if ($domain == $host) {
-            return FALSE;
-        }
-    }
+    if( preg_match("/^(http:\/\/)?([^\/]+)/i", $link, $matches))
+    {
+		$host = $matches[2];
+		// echo "<br />host: $host"; 
+		// get last two segments of host name
+		// preg_match("/[^\.\/]+\.[^\.\/]+$/", $host, $matches);
+		foreach ($domain_array as $domain) {
+			if ($domain == $host) {
+				return FALSE;
+			}
+		}
+	}
     return TRUE;
 }
 
@@ -412,6 +414,8 @@ function split_url( $url, $decode=TRUE )
     // Split the URL into components.
     if ( !preg_match( '!' . $xurl . '!', $url, $m ) )
         return FALSE;
+ 
+	$parts = array();
  
     if ( !empty($m[2]) )        $parts['scheme']  = strtolower($m[2]);
  
